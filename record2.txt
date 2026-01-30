@@ -1,0 +1,18 @@
+//create a table for students with roll no primary key, name not can be null,age (0-99),address,gender default'm'.
+
+create table studentsss(roll_no int primary key, name varchar(20) not null,age int not null check(age between 0 and 99) ,address varchar (20),gender char (20) default 'm');
+
+
+ desc studentsss;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | NO   |     | NULL    |       |
+| age     | int         | NO   |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
+| gender  | char(20)    | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+

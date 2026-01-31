@@ -150,7 +150,7 @@ ERROR 1146 (42S02): Table 's1.person' doesn't exist
 mysql> 
 
 
-
+//
 
 
 

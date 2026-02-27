@@ -1,0 +1,252 @@
+
+ 1. Commit 
+mysql> use s1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO employ(emp_id,name,city,dob,adhar_no) VALUES (6,"leela","pera",'1999-01-05',543267891000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from employ;
++--------+-------+----------------+------------+--------------+
+| emp_id | name  | city           | dob        | adhar_no     |
++--------+-------+----------------+------------+--------------+ |
+|      5 | zee   | gavi           | 1998-09-03 | 87667891234  |
+|      6 | leela | pera           | 1999-01-05 | 543267891000 |
++--------+-------+----------------+------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> 
+
+mysql> use s1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select*from employ;
++--------+-------+----------------+------------+--------------+
+| emp_id | name  | city           | dob        | adhar_no     |
++--------+-------+----------------+------------+--------------+|
+|      5 | zee   | gavi           | 1998-09-03 | 87667891234  |
++--------+-------+----------------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+
+----------------------------------------------------------------------------------------------------------
+2.rollback
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO employ(emp_id,name,city,dob,adhar_no) VALUES (6,"leela","pera",'1999-01-05',543267891000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from employ;
++--------+-------+----------------+------------+--------------+
+| emp_id | name  | city           | dob        | adhar_no     |
++--------+-------+----------------+------------+--------------+ |
+|      5 | zee   | gavi           | 1998-09-03 | 87667891234  |
+|      6 | leela | pera           | 1999-01-05 | 543267891000 |
++--------+-------+----------------+------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> 
+
+mysql> rollback;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> select*from employ;
++--------+-------+----------------+------------+--------------+
+| emp_id | name  | city           | dob        | adhar_no     |
++--------+-------+----------------+------------+--------------+ |
+|      5 | zee   | gavi           | 1998-09-03 | 87667891234  |
+|      6 | leela | pera           | 1999-01-05 | 543267891000 |
++--------+-------+----------------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+------------------------------------------------------------------------------------------------------------------------------
+3. Savepoint
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO employ(emp_id,name,city,dob,adhar_no) VALUES (6,"leela","pera",'1999-01-05',543267891000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO employ(emp_id,name,city,dob,adhar_no) VALUES (7,"basil","kara",'2004-06-05',543262345600);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> savepoint sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> update employ set city = "kaad" where emp_id=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from employ;
++--------+-------+----------------+------------+--------------+
+| emp_id | name  | city           | dob        | adhar_no     |
++--------+-------+----------------+------------+--------------+
+|      5 | zee   | gavi           | 1998-09-03 | 87667891234  |
+|      6 | leela | pera           | 1999-01-05 | 543267891000 |
+|      7 | basil | kaad           | 2004-06-05 | 543262345600 |
++--------+-------+----------------+------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO employ(emp_id,name,city,dob,adhar_no) VALUES (8,"narayani","velath",'1992-06-05',543262345600);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint sp2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update employ set city = "weeti" where emp_id=7;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> savepoint sp3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from employ;
++--------+----------+----------------+------------+--------------+
+| emp_id | name     | city           | dob        | adhar_no     |
++--------+----------+----------------+------------+--------------+
+|      5 | zee      | gavi           | 1998-09-03 | 87667891234  |
+|      6 | leela    | pera           | 1999-01-05 | 543267891000 |
+|      7 | basil    | weeti          | 2004-06-05 | 543262345600 |
+|      8 | narayani | velath         | 1992-06-05 | 543262345600 |
++--------+----------+----------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> delete from employ where emp_id=6;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from employ;
++--------+----------+----------------+------------+--------------+
+| emp_id | name     | city           | dob        | adhar_no     |
++--------+----------+----------------+------------+--------------+
+|      5 | zee      | gavi           | 1998-09-03 | 87667891234  |
+|      7 | basil    | weeti          | 2004-06-05 | 543262345600 |
+|      8 | narayani | velath         | 1992-06-05 | 543262345600 |
++--------+----------+----------------+------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> savepoint sp2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from employ;
++--------+----------+----------------+------------+--------------+
+| emp_id | name     | city           | dob        | adhar_no     |
++--------+----------+----------------+------------+--------------+
+|      5 | zee      | gavi           | 1998-09-03 | 87667891234  |
+|      7 | basil    | weeti          | 2004-06-05 | 543262345600 |
+|      8 | narayani | velath         | 1992-06-05 | 543262345600 |
++--------+----------+----------------+------------+--------------+
+7 rows in set (0.00 sec)
+
+
+mysql> rollback to sp2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from employ;
++--------+----------+----------------+------------+--------------+
+| emp_id | name     | city           | dob        | adhar_no     |
++--------+----------+----------------+------------+--------------+
+|      5 | zee      | gavi           | 1998-09-03 | 87667891234  |
+|      7 | basil    | weeti          | 2004-06-05 | 543262345600 |
+|      8 | narayani | velath         | 1992-06-05 | 543262345600 |
++--------+----------+----------------+------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> rollback to sp3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from employ;
++--------+----------+----------------+------------+--------------+
+| emp_id | name     | city           | dob        | adhar_no     |
++--------+----------+----------------+------------+--------------+
+|      5 | zee      | gavi           | 1998-09-03 | 87667891234  |
+|      6 | leela    | pera           | 1999-01-05 | 543267891000 |
+|      7 | basil    | weeti          | 2004-06-05 | 543262345600 |
+|      8 | narayani | velath         | 1992-06-05 | 543262345600 |
++--------+----------+----------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> rollback to sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from employ;
++--------+-------+----------------+------------+--------------+
+| emp_id | name  | city           | dob        | adhar_no     |
++--------+-------+----------------+------------+--------------+
+|      5 | zee   | gavi           | 1998-09-03 | 87667891234  |
+|      6 | leela | pera           | 1999-01-05 | 543267891000 |
+|      7 | basil | kara           | 2004-06-05 | 543262345600 |
++--------+-------+----------------+------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> 
+
+--------------------------------------------------------------------------------------------------------------
+ 1. GRANT:   Give insert and select privilege to user 1 on customer table in the invoice database.
+Give update and delete privilege to user 2 on all tables in the invoice database. 
+
+
+mysql> GRANT SELECT ON invoice.customer TO 'shaikha'@'localhost';
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> GRANT SELECT,INSERT ON invoice.customer TO 'shaikha'@'localhost';
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> show grants for 'shaikha'@'localhost';
++-----------------------------------------------------------------------+
+| Grants for shaikha@localhost                                          |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `shaikha`@`localhost`                           |
+| GRANT SELECT, INSERT ON `invoice`.`customer` TO `shaikha`@`localhost` |
++-----------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> GRANT UPDATE,DELETE ON invoice.* TO 'user2'@'localhost';
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> show grants for 'user2'@'localhost';
++--------------------------------------------------------------------+
+| Grants for user2@localhost                                         |
++--------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user2`@`localhost`                          |
+| GRANT UPDATE, DELETE ON `invoice`.* TO `user2`@`localhost`         |
++--------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+2. REVOKE:   Remove delete privilege of user 2.
+
+mysql>  REVOKE delete ON invoice.* from 'user2'@'localhost';
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> show grants for 'user2'@'localhost';
++------------------------------------------------------------+
+| Grants for user2@localhost                                 |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user2`@`localhost`                  |
+| GRANT UPDATE ON `invoice`.* TO `user2`@`localhost`         |
++------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> 
+
+

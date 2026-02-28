@@ -1,0 +1,111 @@
+
+1. List all invoice items, avoid duplicates. 
+
+mysql> select*from invoice_item;
++--------+------+----------+
+| inv_id | p_id | quantity |
++--------+------+----------+
+|      2 |    3 |        4 |
+|      5 |    1 |        3 |
+|      5 |    2 |        3 |
++--------+------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct inv_id from invoice_item;
++--------+
+| inv_id |
++--------+
+|      2 |
+|      5 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> 
+
+--------------------------------------------------------------------------------------------------
+2.List the customer details who not live in ‘tirur’
+
+mysql> select*from customer ;
++---------+--------+-------------+------------+------------+
+| cust_id | name   | address     | phone      | city       |
++---------+--------+-------------+------------+------------+
+|       2 | shadha | kallayath   | 9897969594 | valanchery |
+|       3 | shyma  | musliyarath | 7709986655 | chembra    |
+|       4 | nyla   | nelliyalil  | 8787868989 | tirur      |
+|       5 | hudha  | vedathil    | 7878121212 | kollam     |
++---------+--------+-------------+------------+------------+
+4 rows in set (0.02 sec)
+
+mysql> select*from customer where city!='tirur';
++---------+--------+-------------+------------+------------+
+| cust_id | name   | address     | phone      | city       |
++---------+--------+-------------+------------+------------+
+|       2 | shadha | kallayath   | 9897969594 | valanchery |
+|       3 | shyma  | musliyarath | 7709986655 | chembra    |
+|       5 | hudha  | vedathil    | 7878121212 | kollam     |
++---------+--------+-------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> 
+-------------------------------------------------------------------------------------------------------------
+3.3. Display the customer details sorted in ascending by city and descending by names.
+mysql> select * from customer order by city asc,name desc;
++---------+--------+-------------+------------+------------+
+| cust_id | name   | address     | phone      | city       |
++---------+--------+-------------+------------+------------+
+|       3 | shyma  | musliyarath | 7709986655 | chembra    |
+|       5 | hudha  | vedathil    | 7878121212 | kollam     |
+|       4 | nyla   | nelliyalil  | 8787868989 | tirur      |
+|       2 | shadha | kallayath   | 9897969594 | valanchery |
++---------+--------+-------------+------------+------------+
+4 rows in set (0.02 sec)
+
+mysql> 
+
+------------------------------------------------------------------------------------------------------------------
+4. Find the customer names who have ‘e’ or ‘a’ in them and at least 3 characters in length.
+mysql> select name from customer where name like '%e%' or name like '%a%' and na
+me like "___%";
++--------+
+| name   |
++--------+
+| shadha |
+| shyma  |
+| nyla   |
+| hudha  |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

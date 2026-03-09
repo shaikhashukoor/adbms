@@ -1,0 +1,46 @@
+
+1.1. List the product names, only include those purchased quantity more than 3.
+
+mysql> select pname from product where p_id=(select p_id from invoice_item where quantity>3);
++----------------+
+| pname          |
++----------------+
+| washing powder |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> 
+
+-----------------------------------------------------------
+2.2. Find the product that has no sale.
+
+mysql> select pname from product where p_id not in(select p_id from invoice_item );
++---------------+
+| pname         |
++---------------+
+| sunflower oil |
+| soap          |
+| detergent     |
+| salt          |
++---------------+
+4 rows in set (0.03 sec)
+
+mysql> 
+
+
+------------------------------------------------------------------------
+3.List the names of all customers who have purchased at least 2 products, making sure that
+no duplicate names are in the result.
+
+mysql> select distinct name from customer where cust_id in (select cust_id from
+invoice_master where inv_id in (select inv_id from invoice_item  group by inv_id having count(p_id)>=2));
++-------+
+| name  |
++-------+
+| hudha |
++-------+
+1 row in set (0.08 sec)
+
+mysql> 
+
+

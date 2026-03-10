@@ -1,0 +1,51 @@
+1.1. List the product name and quantity of invoice items. 
+ysql> select product.pname,invoice_item.quantity from product natural join invoice_item ;
++----------------+----------+
+| pname          | quantity |
++----------------+----------+
+| washing powder |        4 |
+| tea            |        3 |
+| coffee         |        3 |
++----------------+----------+
+3 rows in set (0.02 sec)
+
+mysql> 
+
+2.. Display the customer name, product name, invoice date of purchased item ‘pen’. 
+
+mysql> select customer.name,product.pname,invoice_master.inv_date from customer join invoice_master on customer.cust_id= invoice_master.cust_id join invoice_item on invoice_master.inv_id = invoice_item.inv_id join product on invoice_item.p_id = product.p_id where product.pname="washing powder";
++--------+----------------+------------+
+| name   | pname          | inv_date   |
++--------+----------------+------------+
+| shadha | washing powder | 2025-09-12 |
++--------+----------------+------------+
+1 row in set (0.00 sec)
+
+mysql> 
+
+
+3. Display all customer details and invoice details must include customer has not
+purchased items.
+mysql> select customer.name,customer.cust_id,invoice_master.inv_id from customer left outer join invoice_master on customer.cust_id =invoice_master.cust_id;
++---------+---------+--------+
+| name    | cust_id | inv_id |
++---------+---------+--------+
+| shadha  |       2 |      2 |
+| shadha  |       2 |      9 |
+| shyma   |       3 |   NULL |
+| nyla    |       4 |      4 |
+| hudha   |       5 |      5 |
+| shivani |      10 |   NULL |
+| shivani |      11 |   NULL |
+| shivani |      12 |   NULL |
++---------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> 
+
+
+8 rows in set (0.00 sec)
+
+mysql> 
+
+

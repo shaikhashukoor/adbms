@@ -17,19 +17,21 @@ mysql> select * from cust_po;
 mysql> 
 2. Create a view for invoice products[cname, , inv_id, product_id, quantity]
 
-mysql> CREATE VIEW inv_po AS SELECT customer.name as cname,invoice_item.inv_id,invoice_item.p_id as product_id,invoice_item.quantity from customer joi
-n invoice_master on  customer.cust_id=invoice_master.cust_id join invoice_item on invoice_master.inv_id=invoice_item.inv_id;
-Query OK, 0 rows affected (0.15 sec)
+mysql> CREATE VIEW inv_pro AS SELECT customer.name,invoice_item.inv_id,invoice_item.p_id,invoice_item.quantity from customer join invoice_master on  customer.cust_id=invoice_master.cust_id join invoice_item on invoice_master.inv_id=invoice_item.inv_id;
+Query OK, 0 rows affected (0.20 sec)
 
-mysql> select * from inv_po;
-+--------+--------+------------+----------+
-| cname  | inv_id | product_id | quantity |
-+--------+--------+------------+----------+
-| shadha |      2 |          3 |        4 |
-| hudha  |      5 |          1 |        3 |
-| hudha  |      5 |          2 |        3 |
-+--------+--------+------------+----------+
+mysql> select * from inv_pro;
++--------+--------+------+----------+
+| name   | inv_id | p_id | quantity |
++--------+--------+------+----------+
+| shadha |      2 |    3 |        4 |
+| hudha  |      5 |    1 |        3 |
+| hudha  |      5 |    2 |        3 |
++--------+--------+------+----------+
 3 rows in set (0.00 sec)
+
+mysql> 
+
 
 mysql> 
 

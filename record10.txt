@@ -1,0 +1,63 @@
+1. Create a procedure to find greatest of 3 numbers. 
+
+mysql> create procedure bigest(a int,b int ,c int)
+    -> begin
+    -> declare x int;
+    -> set x=a;
+    -> if x<b then
+    -> set x=b;
+    -> elseif x<c then
+    -> set x=c;
+    -> end if;
+    -> select x as greatest_no;
+    -> end //
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> call bigest(9,4,3)//
++-------------+
+| greatest_no |
++-------------+
+|           9 |
++-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+
+
+2. Create a procedure to display invoice details of a particular customer.
+
+mysql> create procedure details(in a int) begin select customer.cust_id,customer.name,invoice_item.p_id,invoice_item.quantity,invoice_master.inv_date ,invoice_master.inv_id from customer join invoice_master on customer.cust_id = invoice_master.cust_id join invoice_item on invoice_master.inv_id = invoice_item.inv_id where customer.cust_id=a; end//
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> call details(3)//
+Empty set (0.05 sec)
+
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> call details(2)//
++---------+--------+------+----------+------------+--------+
+| cust_id | name   | p_id | quantity | inv_date   | inv_id |
++---------+--------+------+----------+------------+--------+
+|       2 | shadha |    3 |        4 | 2025-09-12 |      2 |
++---------+--------+------+----------+------------+--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call details(5)//
++---------+-------+------+----------+------------+--------+
+| cust_id | name  | p_id | quantity | inv_date   | inv_id |
++---------+-------+------+----------+------------+--------+
+|       5 | hudha |    1 |        3 | 2025-09-13 |      5 |
+|       5 | hudha |    2 |        3 | 2025-09-13 |      5 |
++---------+-------+------+----------+------------+--------+
+2 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+
+
+

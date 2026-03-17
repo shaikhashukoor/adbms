@@ -83,53 +83,35 @@ INVOICE> db.customer.aggregate([
 ...     $project: {
 ...       _id: 0,
 ...       name: "$name",
-...       pname: "$product_info.name",
+...       pname: "$product_info.pname",
 ...       price: "$product_info.price"
 ...     }
 ...   }
 ... ]);
 [
-  { name: 'bibi', price: 99 },
-  { name: 'bibi', price: 25 },
-  { name: 'bibi', price: 45 },
-  { name: 'bibi', price: 200 },
-  { name: 'bibi', price: 50 },
-  { name: 'nishwa', price: 99 },
-  { name: 'nishwa', price: 25 },
-  { name: 'nishwa', price: 45 },
-  { name: 'nishwa', price: 200 },
-  { name: 'nishwa', price: 50 },
-  { name: 'shadha', price: 99 },
-  { name: 'shadha', price: 25 },
-  { name: 'shadha', price: 45 },
-  { name: 'shadha', price: 200 },
-  { name: 'shadha', price: 50 },
-  { name: 'nishwa', price: 99 },
-  { name: 'nishwa', price: 25 },
-  { name: 'nishwa', price: 45 },
-  { name: 'nishwa', price: 200 },
-  { name: 'nishwa', price: 50 }
+  { name: 'bibi', pname: 'comfort', price: 99 },
+  { name: 'bibi', pname: 'tea', price: 25 },
+  { name: 'bibi', pname: 'note book', price: 45 },
+  { name: 'bibi', pname: 'washing powder', price: 200 },
+  { name: 'bibi', pname: 'tea', price: 50 },
+  { name: 'nishwa', pname: 'comfort', price: 99 },
+  { name: 'nishwa', pname: 'tea', price: 25 },
+  { name: 'nishwa', pname: 'note book', price: 45 },
+  { name: 'nishwa', pname: 'washing powder', price: 200 },
+  { name: 'nishwa', pname: 'tea', price: 50 },
+  { name: 'shadha', pname: 'comfort', price: 99 },
+  { name: 'shadha', pname: 'tea', price: 25 },
+  { name: 'shadha', pname: 'note book', price: 45 },
+  { name: 'shadha', pname: 'washing powder', price: 200 },
+  { name: 'shadha', pname: 'tea', price: 50 },
+  { name: 'nishwa', pname: 'comfort', price: 99 },
+  { name: 'nishwa', pname: 'tea', price: 25 },
+  { name: 'nishwa', pname: 'note book', price: 45 },
+  { name: 'nishwa', pname: 'washing powder', price: 200 },
+  { name: 'nishwa', pname: 'tea', price: 50 }
 ]
 Type "it" for more
 INVOICE> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

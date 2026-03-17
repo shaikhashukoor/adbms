@@ -1,0 +1,149 @@
+1. Write a MongoDB query to sort customer details in ascending order of their name. 
+
+
+
+INVOICE> db.customer.find().sort({name:1});
+[
+  {
+    _id: ObjectId('69b7ab854c8b97b022d861ed'),
+    name: 'bibi',
+    phone: 9944552229,
+    city: 'thrivdrm'
+  },
+  {
+    _id: ObjectId('69b7ac254c8b97b022d861f2'),
+    name: 'hudha',
+    phone: 6767554425,
+    city: 'farook'
+  },
+  {
+    _id: ObjectId('69b7abab4c8b97b022d861ef'),
+    name: 'nishwa',
+    phone: 9034551127,
+    city: 'ernakulam'
+  },
+ 
+  {
+    _id: ObjectId('69b7abc44c8b97b022d861f0'),
+    name: 'shadha',
+    phone: 7878787823,
+    city: 'thazhekode'
+  }
+]
+INVOICE> 
+
+2. Write a MongoDB query to count number of customers in each city. 
+INVOICE> db.customer.aggregate([{$group:{_id:"$city",total:{$sum:1}}}]);
+[
+  { _id: 'thrivdrm', total: 1 },
+  { _id: 'ernakulam', total: 1 },
+  { _id: 'thazhekode', total: 1 },
+  { _id: 'farook', total: 1 }
+]
+INVOICE> 
+
+ 3. Write a MongoDB query to find minimum and maximum age in each city. 
+INVOICE> db.product.aggregate([{$group:{_id:"$pname",max_price:{$max:"$price"},min_price:{$min:"$price"}}}]);
+[
+  { _id: 'note book', max_price: 45, min_price: 45 },
+  { _id: 'comfort', max_price: 99, min_price: 99 },
+  { _id: 'tea', max_price: 50, min_price: 25 },
+  { _id: 'washing powder', max_price: 200, min_price: 200 }
+]
+INVOICE> 
+
+4. Write a MongoDB query using the $match stage to retrieve all customer documents whose
+customer_name starts with the letter “S”.
+
+INVOICE> db.customer.aggregate([{$match:{name:{$regex:"^s"}}}])
+[
+  {
+    _id: ObjectId('69b7abc44c8b97b022d861f0'),
+    name: 'shadha',
+    phone: 7878787823,
+    city: 'thazhekode'
+  }
+]
+5. Write a query using $lookup to join CUSTOMER and PRODUCT collections and display only
+customer name, product name, and price.
+
+INVOICE> db.customer.aggregate([
+...   {
+...     $lookup: {
+...       from: "product",
+...       localField: "product_id",
+...       foreignField: "product_id",
+...       as: "product_info"
+...     }
+...   },
+...   {
+...     $unwind: "$product_info"
+...   },
+...   {
+...     $project: {
+...       _id: 0,
+...       name: "$name",
+...       pname: "$product_info.name",
+...       price: "$product_info.price"
+...     }
+...   }
+... ]);
+[
+  { name: 'bibi', price: 99 },
+  { name: 'bibi', price: 25 },
+  { name: 'bibi', price: 45 },
+  { name: 'bibi', price: 200 },
+  { name: 'bibi', price: 50 },
+  { name: 'nishwa', price: 99 },
+  { name: 'nishwa', price: 25 },
+  { name: 'nishwa', price: 45 },
+  { name: 'nishwa', price: 200 },
+  { name: 'nishwa', price: 50 },
+  { name: 'shadha', price: 99 },
+  { name: 'shadha', price: 25 },
+  { name: 'shadha', price: 45 },
+  { name: 'shadha', price: 200 },
+  { name: 'shadha', price: 50 },
+  { name: 'nishwa', price: 99 },
+  { name: 'nishwa', price: 25 },
+  { name: 'nishwa', price: 45 },
+  { name: 'nishwa', price: 200 },
+  { name: 'nishwa', price: 50 }
+]
+Type "it" for more
+INVOICE> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
